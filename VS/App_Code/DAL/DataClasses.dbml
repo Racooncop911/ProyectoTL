@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TLBD" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=JARVIZ;Initial Catalog=TLBD;Persist Security Info=True;User ID=guest" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TLBDConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Tareas" Member="Tareas">
+    <Type Name="Tareas">
+      <Column Name="IDTareas" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDMat" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Titulo" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FechaEntrega" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Materias_Tareas" Member="Materias" ThisKey="IDMat" OtherKey="IDMat" Type="Materias" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sesiones" Member="Sesiones">
+    <Type Name="Sesiones">
+      <Column Name="IDSesion" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Dia" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Hora" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="IDAlumno" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IDDoc" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IDMat" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Aula" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Association Name="Materias_Sesiones" Member="Materias" ThisKey="IDMat" OtherKey="IDMat" Type="Materias" IsForeignKey="true" />
+      <Association Name="Docentes_Sesiones" Member="Docentes" ThisKey="IDDoc" OtherKey="IDDoc" Type="Docentes" IsForeignKey="true" />
+      <Association Name="Alumnos_Sesiones" Member="Alumnos" ThisKey="IDAlumno" OtherKey="IDAlumno" Type="Alumnos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Periodos" Member="Periodos">
+    <Type Name="Periodos">
+      <Column Name="IDPeriodo" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FechaInicio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCierre" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Materias" Member="Materias">
+    <Type Name="Materias">
+      <Column Name="IDMat" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Clave" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Creditos" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Association Name="Materias_Tareas" Member="Tareas" ThisKey="IDMat" OtherKey="IDMat" Type="Tareas" />
+      <Association Name="Materias_Sesiones" Member="Sesiones" ThisKey="IDMat" OtherKey="IDMat" Type="Sesiones" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Docentes" Member="Docentes">
+    <Type Name="Docentes">
+      <Column Name="IDDoc" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RFC" Type="System.String" DbType="NVarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="DNombre" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="DApPaterno" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="DApMaterno" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Association Name="Docentes_Sesiones" Member="Sesiones" ThisKey="IDDoc" OtherKey="IDDoc" Type="Sesiones" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Alumnos" Member="Alumnos">
+    <Type Name="Alumnos">
+      <Column Name="IDAlumno" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NoControl" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="ApPaterno" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="ApMaterno" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="Carrera" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Association Name="Alumnos_Sesiones" Member="Sesiones" ThisKey="IDAlumno" OtherKey="IDAlumno" Type="Sesiones" />
+    </Type>
+  </Table>
+</Database>

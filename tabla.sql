@@ -1,54 +1,55 @@
- drop TABLE Periodos
- drop TABLE Alumnos
- drop TABLE Docentes
- drop TABLE Materias
- drop TABLE Tareas
- drop TABLE Sesiones
+drop TABLE Periodos
+drop TABLE Alumnos
+drop TABLE Docentes
+drop TABLE Materias
+drop TABLE Tareas
+drop TABLE Sesiones
 
  CREATE TABLE Periodos(
-	IDPeriodo bigint NOT NULL,
+	IDPeriodo bigint NOT NULL PRIMARY KEY,
 	FechaInicio datetime NOT NULL,
 	FechaCierre datetime NOT NULL
 	
 )
- CREATE TABLE Alumnos (
+
+ CREATE TABLE Alumnos(
 	IDAlumno bigint PRIMARY KEY,
 	NoControl int NOT NULL,
-	Nombre nvarchar(200) NOT NULL,
-	ApPaterno nvarchar(200) NOT NULL,
-	ApMaterno nvarchar(200) NULL,
-	Carrera nvarchar(200) NOT NULL,
-	Telefono nvarchar(200) NULL,
-	Correo nvarchar(200) NULL
+	Nombre nvarchar(60) NOT NULL,
+	ApPaterno nvarchar(60) NOT NULL,
+	ApMaterno nvarchar(60) NULL,
+	Carrera nvarchar(40) NOT NULL,
+	Telefono numeric(10) NULL,
+	Correo nvarchar(60) NULL
  
 )
-  CREATE TABLE Docentes (
+  CREATE TABLE Docentes(
 	IDDoc bigint PRIMARY KEY,
-	RFC nvarchar(200) NOT NULL,
-	DNombre nvarchar(200) NOT NULL,
-	DApPaterno nvarchar(200) NOT NULL,
-	DApMaterno nvarchar(200) NULL
+	RFC nvarchar(13) NOT NULL,
+	DNombre nvarchar(60) NOT NULL,
+	DApPaterno nvarchar(60) NOT NULL,
+	DApMaterno nvarchar(60) NULL
 )
-CREATE TABLE Materias (
+CREATE TABLE Materias(
 	IDMat bigint PRIMARY KEY,
-	Clave nvarchar(100) NOT NULL UNIQUE,,
+	Clave nvarchar(50) NOT NULL,
 	Creditos INT NOT NULL,
-	NombreM nvarchar(200) NOT NULL
+	Nombre nvarchar(80) NOT NULL
 )
-CREATE TABLE Tareas (
+CREATE TABLE Tareas(
 	IDTareas bigint PRIMARY KEY,
-****	NombreM REFERENCES 
-	Titulo nvarchar(200)
-	Descripcion
-	FechaEntrega
+	IDMat bigint REFERENCES Materias,
+	Titulo nvarchar(80),
+	Descripcion text,
+	FechaEntrega datetime,
 )
 
 CREATE TABLE Sesiones(
-	IDSesion PRIMARY KEY,
+	IDSesion bigint PRIMARY KEY,
+	Dia  date NOT NULL,
 	Hora time NOT NULL,
-	***IDAlumno 
-	***IDDoc
-	***IDMat
-	Aula
-
+	IDAlumno bigint REFERENCES Alumnos,
+	IDDoc bigint REFERENCES Docentes,
+	IDMat bigint REFERENCES Materias,
+	Aula varchar(4)
 )
