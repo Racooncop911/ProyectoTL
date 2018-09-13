@@ -17,6 +17,22 @@ namespace BLL///utilizamos BLL en el nombre de espaico
             // TODO: Agregar aquí la lógica del constructor
             //
         }
+    public static long InsertMaterias(MateriasInfo info)
+        {
+            Materia Materia = new Materia();
+
+            Materia.IDMat = info.IDMat;
+            Materia.Clave = info.Clave;
+            Materia.Creditos = info.Creditos;
+            Materia.Nombre = info.Nombre;
+
+            DataClassesDataContext dc = new DataClassesDataContext();
+            dc.Materia.InsertOnSubmit(Materia);
+            dc.SubmitChanges();
+
+            return Materia.IDMat;
+        }
+        
     }
     public class MateriasInfo
     {

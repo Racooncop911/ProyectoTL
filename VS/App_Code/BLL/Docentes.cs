@@ -17,6 +17,23 @@ namespace BLL
             // TODO: Agregar aquí la lógica del constructor
             //
         }   
+        public static long InsertDocente(DocentesInfo  info)
+        {
+            Docente Docente = new Docente();
+
+            Docente.IDDoc = info.IDDoc;
+            Docente.RFC = info.RFC;
+            Docente.DNombre = info.DNombre;
+            Docente.DApPaterno = info.DApPaterno;
+            Docente.DApMaterno = info.DApMaterno;
+
+            DataClassesDataContext dc = new DataClassesDataContext();
+
+            dc.Docente.InsertOnSubmit(Docente);
+            dc.SubmitChanges();
+
+            return Docente.IDDoc;
+        }
     }
     public class DocentesInfo
     {

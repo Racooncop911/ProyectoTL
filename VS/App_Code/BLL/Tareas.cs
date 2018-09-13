@@ -17,6 +17,22 @@ namespace BLL
             // TODO: Agregar aquí la lógica del constructor
             //
         }
+        public static long InsertTarea(TareasInfo info)
+        {
+            Tarea Tarea = new Tarea();
+
+            Tarea.IDTareas = info.IDTareas;
+            Tarea.IDMat = info.IDMat;
+            Tarea.Titulo = info.Titulo;
+            Tarea.FechaEntrega = info.FechaEntrega;
+
+            DataClassesDataContext dc = new DataClassesDataContext();
+
+            dc.Tarea.InsertOnSubmit(Tarea);
+            dc.SubmitChanges();
+
+            return Tarea.IDTareas;
+        }
     }
     public class TareasInfo
     {

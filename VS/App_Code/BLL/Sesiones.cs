@@ -17,6 +17,24 @@ namespace BLL
             // TODO: Agregar aquí la lógica del constructor
             //
         }
+        public static long InsertSesion(SesionesInfo info)
+        {
+            Sesion sesion = new Sesion();
+
+            sesion.IDSesion = info.IDSesion;
+            sesion.Fecha = info.Fecha;
+            sesion.IDAlumno = info.IDAlumno;
+            sesion.IDDoc = info.IDDoc;
+            sesion.IDMat = info.IDMat;
+            sesion.Aula = info.Aula;
+
+            DataClassesDataContext dc = new DataClassesDataContext();
+
+            dc.Sesion.InsertOnSubmit(sesion);
+            dc.SubmitChanges();
+
+            return sesion.IDSesion;
+        }
     }
     public class SesionesInfo
     {

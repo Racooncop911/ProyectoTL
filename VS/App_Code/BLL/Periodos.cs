@@ -17,6 +17,22 @@ namespace BLL
             // TODO: Agregar aquí la lógica del constructor
             //
         }
+        public static long InsertPeriodo(PeriodosInfo info)
+        {
+            Periodo periodo = new Periodo();
+
+            periodo.IDPeriodo = info.IDPeriodo;
+            periodo.FechaInicio = info.FechaInicio;
+            periodo.FechaCierre = info.FechaCierre;
+
+            DataClassesDataContext dc = new DataClassesDataContext();
+
+            dc.Periodo.InsertOnSubmit(periodo);
+            dc.SubmitChanges();
+
+            return periodo.IDPeriodo;
+
+        }
     }
     public class PeriodosInfo
     {
