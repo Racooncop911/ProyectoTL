@@ -33,21 +33,21 @@ namespace DAL
     partial void InsertAlumno(Alumno instance);
     partial void UpdateAlumno(Alumno instance);
     partial void DeleteAlumno(Alumno instance);
-    partial void InsertTarea(Tarea instance);
-    partial void UpdateTarea(Tarea instance);
-    partial void DeleteTarea(Tarea instance);
-    partial void InsertSesion(Sesion instance);
-    partial void UpdateSesion(Sesion instance);
-    partial void DeleteSesion(Sesion instance);
-    partial void InsertPeriodo(Periodo instance);
-    partial void UpdatePeriodo(Periodo instance);
-    partial void DeletePeriodo(Periodo instance);
-    partial void InsertMateria(Materia instance);
-    partial void UpdateMateria(Materia instance);
-    partial void DeleteMateria(Materia instance);
     partial void InsertDocente(Docente instance);
     partial void UpdateDocente(Docente instance);
     partial void DeleteDocente(Docente instance);
+    partial void InsertMateria(Materia instance);
+    partial void UpdateMateria(Materia instance);
+    partial void DeleteMateria(Materia instance);
+    partial void InsertPeriodo(Periodo instance);
+    partial void UpdatePeriodo(Periodo instance);
+    partial void DeletePeriodo(Periodo instance);
+    partial void InsertSesion(Sesion instance);
+    partial void UpdateSesion(Sesion instance);
+    partial void DeleteSesion(Sesion instance);
+    partial void InsertTarea(Tarea instance);
+    partial void UpdateTarea(Tarea instance);
+    partial void DeleteTarea(Tarea instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -88,27 +88,11 @@ namespace DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Tarea> Tarea
+		public System.Data.Linq.Table<Docente> Docente
 		{
 			get
 			{
-				return this.GetTable<Tarea>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Sesion> Sesion
-		{
-			get
-			{
-				return this.GetTable<Sesion>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Periodo> Periodo
-		{
-			get
-			{
-				return this.GetTable<Periodo>();
+				return this.GetTable<Docente>();
 			}
 		}
 		
@@ -120,11 +104,27 @@ namespace DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Docente> Docente
+		public System.Data.Linq.Table<Periodo> Periodo
 		{
 			get
 			{
-				return this.GetTable<Docente>();
+				return this.GetTable<Periodo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Sesion> Sesion
+		{
+			get
+			{
+				return this.GetTable<Sesion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tarea> Tarea
+		{
+			get
+			{
+				return this.GetTable<Tarea>();
 			}
 		}
 	}
@@ -181,7 +181,7 @@ namespace DAL
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDAlumno", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDAlumno", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public long IDAlumno
 		{
 			get
@@ -387,68 +387,233 @@ namespace DAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tarea")]
-	public partial class Tarea : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Docente")]
+	public partial class Docente : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private long _IDTareas;
+		private long _IDDoc;
 		
-		private System.Nullable<long> _IDMat;
+		private string _RFC;
 		
-		private string _Titulo;
+		private string _DNombre;
 		
-		private string _Descripcion;
+		private string _DApPaterno;
 		
-		private System.Nullable<System.DateTime> _FechaEntrega;
+		private string _DApMaterno;
 		
-		private EntityRef<Materia> _Materia;
+		private EntitySet<Sesion> _Sesion;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIDTareasChanging(long value);
-    partial void OnIDTareasChanged();
-    partial void OnIDMatChanging(System.Nullable<long> value);
-    partial void OnIDMatChanged();
-    partial void OnTituloChanging(string value);
-    partial void OnTituloChanged();
-    partial void OnDescripcionChanging(string value);
-    partial void OnDescripcionChanged();
-    partial void OnFechaEntregaChanging(System.Nullable<System.DateTime> value);
-    partial void OnFechaEntregaChanged();
+    partial void OnIDDocChanging(long value);
+    partial void OnIDDocChanged();
+    partial void OnRFCChanging(string value);
+    partial void OnRFCChanged();
+    partial void OnDNombreChanging(string value);
+    partial void OnDNombreChanged();
+    partial void OnDApPaternoChanging(string value);
+    partial void OnDApPaternoChanged();
+    partial void OnDApMaternoChanging(string value);
+    partial void OnDApMaternoChanged();
     #endregion
 		
-		public Tarea()
+		public Docente()
 		{
-			this._Materia = default(EntityRef<Materia>);
+			this._Sesion = new EntitySet<Sesion>(new Action<Sesion>(this.attach_Sesion), new Action<Sesion>(this.detach_Sesion));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTareas", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long IDTareas
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDDoc", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long IDDoc
 		{
 			get
 			{
-				return this._IDTareas;
+				return this._IDDoc;
 			}
 			set
 			{
-				if ((this._IDTareas != value))
+				if ((this._IDDoc != value))
 				{
-					this.OnIDTareasChanging(value);
+					this.OnIDDocChanging(value);
 					this.SendPropertyChanging();
-					this._IDTareas = value;
-					this.SendPropertyChanged("IDTareas");
-					this.OnIDTareasChanged();
+					this._IDDoc = value;
+					this.SendPropertyChanged("IDDoc");
+					this.OnIDDocChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMat", DbType="BigInt")]
-		public System.Nullable<long> IDMat
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RFC", DbType="NVarChar(13) NOT NULL", CanBeNull=false)]
+		public string RFC
+		{
+			get
+			{
+				return this._RFC;
+			}
+			set
+			{
+				if ((this._RFC != value))
+				{
+					this.OnRFCChanging(value);
+					this.SendPropertyChanging();
+					this._RFC = value;
+					this.SendPropertyChanged("RFC");
+					this.OnRFCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DNombre", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
+		public string DNombre
+		{
+			get
+			{
+				return this._DNombre;
+			}
+			set
+			{
+				if ((this._DNombre != value))
+				{
+					this.OnDNombreChanging(value);
+					this.SendPropertyChanging();
+					this._DNombre = value;
+					this.SendPropertyChanged("DNombre");
+					this.OnDNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DApPaterno", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
+		public string DApPaterno
+		{
+			get
+			{
+				return this._DApPaterno;
+			}
+			set
+			{
+				if ((this._DApPaterno != value))
+				{
+					this.OnDApPaternoChanging(value);
+					this.SendPropertyChanging();
+					this._DApPaterno = value;
+					this.SendPropertyChanged("DApPaterno");
+					this.OnDApPaternoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DApMaterno", DbType="NVarChar(60)")]
+		public string DApMaterno
+		{
+			get
+			{
+				return this._DApMaterno;
+			}
+			set
+			{
+				if ((this._DApMaterno != value))
+				{
+					this.OnDApMaternoChanging(value);
+					this.SendPropertyChanging();
+					this._DApMaterno = value;
+					this.SendPropertyChanged("DApMaterno");
+					this.OnDApMaternoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Docente_Sesion", Storage="_Sesion", ThisKey="IDDoc", OtherKey="IDDoc")]
+		public EntitySet<Sesion> Sesion
+		{
+			get
+			{
+				return this._Sesion;
+			}
+			set
+			{
+				this._Sesion.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Sesion(Sesion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Docente = this;
+		}
+		
+		private void detach_Sesion(Sesion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Docente = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Materia")]
+	public partial class Materia : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _IDMat;
+		
+		private string _Clave;
+		
+		private int _Creditos;
+		
+		private string _Nombre;
+		
+		private EntitySet<Sesion> _Sesion;
+		
+		private EntitySet<Tarea> _Tarea;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDMatChanging(long value);
+    partial void OnIDMatChanged();
+    partial void OnClaveChanging(string value);
+    partial void OnClaveChanged();
+    partial void OnCreditosChanging(int value);
+    partial void OnCreditosChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    #endregion
+		
+		public Materia()
+		{
+			this._Sesion = new EntitySet<Sesion>(new Action<Sesion>(this.attach_Sesion), new Action<Sesion>(this.detach_Sesion));
+			this._Tarea = new EntitySet<Tarea>(new Action<Tarea>(this.attach_Tarea), new Action<Tarea>(this.detach_Tarea));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMat", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long IDMat
 		{
 			get
 			{
@@ -458,10 +623,6 @@ namespace DAL
 			{
 				if ((this._IDMat != value))
 				{
-					if (this._Materia.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnIDMatChanging(value);
 					this.SendPropertyChanging();
 					this._IDMat = value;
@@ -471,96 +632,222 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Titulo", DbType="NVarChar(80)")]
-		public string Titulo
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Clave", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Clave
 		{
 			get
 			{
-				return this._Titulo;
+				return this._Clave;
 			}
 			set
 			{
-				if ((this._Titulo != value))
+				if ((this._Clave != value))
 				{
-					this.OnTituloChanging(value);
+					this.OnClaveChanging(value);
 					this.SendPropertyChanging();
-					this._Titulo = value;
-					this.SendPropertyChanged("Titulo");
-					this.OnTituloChanged();
+					this._Clave = value;
+					this.SendPropertyChanged("Clave");
+					this.OnClaveChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Descripcion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Creditos", DbType="Int NOT NULL")]
+		public int Creditos
 		{
 			get
 			{
-				return this._Descripcion;
+				return this._Creditos;
 			}
 			set
 			{
-				if ((this._Descripcion != value))
+				if ((this._Creditos != value))
 				{
-					this.OnDescripcionChanging(value);
+					this.OnCreditosChanging(value);
 					this.SendPropertyChanging();
-					this._Descripcion = value;
-					this.SendPropertyChanged("Descripcion");
-					this.OnDescripcionChanged();
+					this._Creditos = value;
+					this.SendPropertyChanged("Creditos");
+					this.OnCreditosChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEntrega", DbType="DateTime")]
-		public System.Nullable<System.DateTime> FechaEntrega
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(80) NOT NULL", CanBeNull=false)]
+		public string Nombre
 		{
 			get
 			{
-				return this._FechaEntrega;
+				return this._Nombre;
 			}
 			set
 			{
-				if ((this._FechaEntrega != value))
+				if ((this._Nombre != value))
 				{
-					this.OnFechaEntregaChanging(value);
+					this.OnNombreChanging(value);
 					this.SendPropertyChanging();
-					this._FechaEntrega = value;
-					this.SendPropertyChanged("FechaEntrega");
-					this.OnFechaEntregaChanged();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Tarea", Storage="_Materia", ThisKey="IDMat", OtherKey="IDMat", IsForeignKey=true)]
-		public Materia Materia
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Sesion", Storage="_Sesion", ThisKey="IDMat", OtherKey="IDMat")]
+		public EntitySet<Sesion> Sesion
 		{
 			get
 			{
-				return this._Materia.Entity;
+				return this._Sesion;
 			}
 			set
 			{
-				Materia previousValue = this._Materia.Entity;
-				if (((previousValue != value) 
-							|| (this._Materia.HasLoadedOrAssignedValue == false)))
+				this._Sesion.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Tarea", Storage="_Tarea", ThisKey="IDMat", OtherKey="IDMat")]
+		public EntitySet<Tarea> Tarea
+		{
+			get
+			{
+				return this._Tarea;
+			}
+			set
+			{
+				this._Tarea.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Sesion(Sesion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Materia = this;
+		}
+		
+		private void detach_Sesion(Sesion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Materia = null;
+		}
+		
+		private void attach_Tarea(Tarea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Materia = this;
+		}
+		
+		private void detach_Tarea(Tarea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Materia = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Periodo")]
+	public partial class Periodo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _IDPeriodo;
+		
+		private System.DateTime _FechaInicio;
+		
+		private System.DateTime _FechaCierre;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDPeriodoChanging(long value);
+    partial void OnIDPeriodoChanged();
+    partial void OnFechaInicioChanging(System.DateTime value);
+    partial void OnFechaInicioChanged();
+    partial void OnFechaCierreChanging(System.DateTime value);
+    partial void OnFechaCierreChanged();
+    #endregion
+		
+		public Periodo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPeriodo", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long IDPeriodo
+		{
+			get
+			{
+				return this._IDPeriodo;
+			}
+			set
+			{
+				if ((this._IDPeriodo != value))
 				{
+					this.OnIDPeriodoChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Materia.Entity = null;
-						previousValue.Tarea.Remove(this);
-					}
-					this._Materia.Entity = value;
-					if ((value != null))
-					{
-						value.Tarea.Add(this);
-						this._IDMat = value.IDMat;
-					}
-					else
-					{
-						this._IDMat = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Materia");
+					this._IDPeriodo = value;
+					this.SendPropertyChanged("IDPeriodo");
+					this.OnIDPeriodoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaInicio", DbType="DateTime NOT NULL")]
+		public System.DateTime FechaInicio
+		{
+			get
+			{
+				return this._FechaInicio;
+			}
+			set
+			{
+				if ((this._FechaInicio != value))
+				{
+					this.OnFechaInicioChanging(value);
+					this.SendPropertyChanging();
+					this._FechaInicio = value;
+					this.SendPropertyChanged("FechaInicio");
+					this.OnFechaInicioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCierre", DbType="DateTime NOT NULL")]
+		public System.DateTime FechaCierre
+		{
+			get
+			{
+				return this._FechaCierre;
+			}
+			set
+			{
+				if ((this._FechaCierre != value))
+				{
+					this.OnFechaCierreChanging(value);
+					this.SendPropertyChanging();
+					this._FechaCierre = value;
+					this.SendPropertyChanged("FechaCierre");
+					this.OnFechaCierreChanged();
 				}
 			}
 		}
@@ -606,9 +893,9 @@ namespace DAL
 		
 		private EntityRef<Alumno> _Alumno;
 		
-		private EntityRef<Materia> _Materia;
-		
 		private EntityRef<Docente> _Docente;
+		
+		private EntityRef<Materia> _Materia;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -631,12 +918,12 @@ namespace DAL
 		public Sesion()
 		{
 			this._Alumno = default(EntityRef<Alumno>);
-			this._Materia = default(EntityRef<Materia>);
 			this._Docente = default(EntityRef<Docente>);
+			this._Materia = default(EntityRef<Materia>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDSesion", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDSesion", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public long IDSesion
 		{
 			get
@@ -802,40 +1089,6 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Sesion", Storage="_Materia", ThisKey="IDMat", OtherKey="IDMat", IsForeignKey=true)]
-		public Materia Materia
-		{
-			get
-			{
-				return this._Materia.Entity;
-			}
-			set
-			{
-				Materia previousValue = this._Materia.Entity;
-				if (((previousValue != value) 
-							|| (this._Materia.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Materia.Entity = null;
-						previousValue.Sesion.Remove(this);
-					}
-					this._Materia.Entity = value;
-					if ((value != null))
-					{
-						value.Sesion.Add(this);
-						this._IDMat = value.IDMat;
-					}
-					else
-					{
-						this._IDMat = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Materia");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Docente_Sesion", Storage="_Docente", ThisKey="IDDoc", OtherKey="IDDoc", IsForeignKey=true)]
 		public Docente Docente
 		{
@@ -870,112 +1123,36 @@ namespace DAL
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Periodo")]
-	public partial class Periodo : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _IDPeriodo;
-		
-		private System.DateTime _FechaInicio;
-		
-		private System.DateTime _FechaCierre;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDPeriodoChanging(long value);
-    partial void OnIDPeriodoChanged();
-    partial void OnFechaInicioChanging(System.DateTime value);
-    partial void OnFechaInicioChanged();
-    partial void OnFechaCierreChanging(System.DateTime value);
-    partial void OnFechaCierreChanged();
-    #endregion
-		
-		public Periodo()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDPeriodo", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long IDPeriodo
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Sesion", Storage="_Materia", ThisKey="IDMat", OtherKey="IDMat", IsForeignKey=true)]
+		public Materia Materia
 		{
 			get
 			{
-				return this._IDPeriodo;
+				return this._Materia.Entity;
 			}
 			set
 			{
-				if ((this._IDPeriodo != value))
+				Materia previousValue = this._Materia.Entity;
+				if (((previousValue != value) 
+							|| (this._Materia.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnIDPeriodoChanging(value);
 					this.SendPropertyChanging();
-					this._IDPeriodo = value;
-					this.SendPropertyChanged("IDPeriodo");
-					this.OnIDPeriodoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaInicio", DbType="DateTime NOT NULL")]
-		public System.DateTime FechaInicio
-		{
-			get
-			{
-				return this._FechaInicio;
-			}
-			set
-			{
-				if ((this._FechaInicio != value))
-				{
-					this.OnFechaInicioChanging(value);
-					this.SendPropertyChanging();
-					this._FechaInicio = value;
-					this.SendPropertyChanged("FechaInicio");
-					this.OnFechaInicioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCierre", DbType="DateTime NOT NULL")]
-		public System.DateTime FechaCierre
-		{
-			get
-			{
-				return this._FechaCierre;
-			}
-			set
-			{
-				if ((this._FechaCierre != value))
-				{
-					this.OnFechaCierreChanging(value);
-					this.SendPropertyChanging();
-					this._FechaCierre = value;
-					this.SendPropertyChanged("FechaCierre");
-					this.OnFechaCierreChanged();
+					if ((previousValue != null))
+					{
+						this._Materia.Entity = null;
+						previousValue.Sesion.Remove(this);
+					}
+					this._Materia.Entity = value;
+					if ((value != null))
+					{
+						value.Sesion.Add(this);
+						this._IDMat = value.IDMat;
+					}
+					else
+					{
+						this._IDMat = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Materia");
 				}
 			}
 		}
@@ -1001,47 +1178,68 @@ namespace DAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Materia")]
-	public partial class Materia : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tarea")]
+	public partial class Tarea : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private long _IDMat;
+		private long _IDTareas;
 		
-		private string _Clave;
+		private System.Nullable<long> _IDMat;
 		
-		private int _Creditos;
+		private string _Titulo;
 		
-		private string _Nombre;
+		private string _Descripcion;
 		
-		private EntitySet<Tarea> _Tarea;
+		private System.Nullable<System.DateTime> _FechaEntrega;
 		
-		private EntitySet<Sesion> _Sesion;
+		private EntityRef<Materia> _Materia;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIDMatChanging(long value);
+    partial void OnIDTareasChanging(long value);
+    partial void OnIDTareasChanged();
+    partial void OnIDMatChanging(System.Nullable<long> value);
     partial void OnIDMatChanged();
-    partial void OnClaveChanging(string value);
-    partial void OnClaveChanged();
-    partial void OnCreditosChanging(int value);
-    partial void OnCreditosChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
+    partial void OnTituloChanging(string value);
+    partial void OnTituloChanged();
+    partial void OnDescripcionChanging(string value);
+    partial void OnDescripcionChanged();
+    partial void OnFechaEntregaChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaEntregaChanged();
     #endregion
 		
-		public Materia()
+		public Tarea()
 		{
-			this._Tarea = new EntitySet<Tarea>(new Action<Tarea>(this.attach_Tarea), new Action<Tarea>(this.detach_Tarea));
-			this._Sesion = new EntitySet<Sesion>(new Action<Sesion>(this.attach_Sesion), new Action<Sesion>(this.detach_Sesion));
+			this._Materia = default(EntityRef<Materia>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMat", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long IDMat
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTareas", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long IDTareas
+		{
+			get
+			{
+				return this._IDTareas;
+			}
+			set
+			{
+				if ((this._IDTareas != value))
+				{
+					this.OnIDTareasChanging(value);
+					this.SendPropertyChanging();
+					this._IDTareas = value;
+					this.SendPropertyChanged("IDTareas");
+					this.OnIDTareasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMat", DbType="BigInt")]
+		public System.Nullable<long> IDMat
 		{
 			get
 			{
@@ -1051,6 +1249,10 @@ namespace DAL
 			{
 				if ((this._IDMat != value))
 				{
+					if (this._Materia.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnIDMatChanging(value);
 					this.SendPropertyChanging();
 					this._IDMat = value;
@@ -1060,89 +1262,97 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Clave", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Clave
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Titulo", DbType="NVarChar(80)")]
+		public string Titulo
 		{
 			get
 			{
-				return this._Clave;
+				return this._Titulo;
 			}
 			set
 			{
-				if ((this._Clave != value))
+				if ((this._Titulo != value))
 				{
-					this.OnClaveChanging(value);
+					this.OnTituloChanging(value);
 					this.SendPropertyChanging();
-					this._Clave = value;
-					this.SendPropertyChanged("Clave");
-					this.OnClaveChanged();
+					this._Titulo = value;
+					this.SendPropertyChanged("Titulo");
+					this.OnTituloChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Creditos", DbType="Int NOT NULL")]
-		public int Creditos
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Descripcion
 		{
 			get
 			{
-				return this._Creditos;
+				return this._Descripcion;
 			}
 			set
 			{
-				if ((this._Creditos != value))
+				if ((this._Descripcion != value))
 				{
-					this.OnCreditosChanging(value);
+					this.OnDescripcionChanging(value);
 					this.SendPropertyChanging();
-					this._Creditos = value;
-					this.SendPropertyChanged("Creditos");
-					this.OnCreditosChanged();
+					this._Descripcion = value;
+					this.SendPropertyChanged("Descripcion");
+					this.OnDescripcionChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(80) NOT NULL", CanBeNull=false)]
-		public string Nombre
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEntrega", DbType="DateTime")]
+		public System.Nullable<System.DateTime> FechaEntrega
 		{
 			get
 			{
-				return this._Nombre;
+				return this._FechaEntrega;
 			}
 			set
 			{
-				if ((this._Nombre != value))
+				if ((this._FechaEntrega != value))
 				{
-					this.OnNombreChanging(value);
+					this.OnFechaEntregaChanging(value);
 					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
+					this._FechaEntrega = value;
+					this.SendPropertyChanged("FechaEntrega");
+					this.OnFechaEntregaChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Tarea", Storage="_Tarea", ThisKey="IDMat", OtherKey="IDMat")]
-		public EntitySet<Tarea> Tarea
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Tarea", Storage="_Materia", ThisKey="IDMat", OtherKey="IDMat", IsForeignKey=true)]
+		public Materia Materia
 		{
 			get
 			{
-				return this._Tarea;
+				return this._Materia.Entity;
 			}
 			set
 			{
-				this._Tarea.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Materia_Sesion", Storage="_Sesion", ThisKey="IDMat", OtherKey="IDMat")]
-		public EntitySet<Sesion> Sesion
-		{
-			get
-			{
-				return this._Sesion;
-			}
-			set
-			{
-				this._Sesion.Assign(value);
+				Materia previousValue = this._Materia.Entity;
+				if (((previousValue != value) 
+							|| (this._Materia.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Materia.Entity = null;
+						previousValue.Tarea.Remove(this);
+					}
+					this._Materia.Entity = value;
+					if ((value != null))
+					{
+						value.Tarea.Add(this);
+						this._IDMat = value.IDMat;
+					}
+					else
+					{
+						this._IDMat = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Materia");
+				}
 			}
 		}
 		
@@ -1164,216 +1374,6 @@ namespace DAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Tarea(Tarea entity)
-		{
-			this.SendPropertyChanging();
-			entity.Materia = this;
-		}
-		
-		private void detach_Tarea(Tarea entity)
-		{
-			this.SendPropertyChanging();
-			entity.Materia = null;
-		}
-		
-		private void attach_Sesion(Sesion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Materia = this;
-		}
-		
-		private void detach_Sesion(Sesion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Materia = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Docente")]
-	public partial class Docente : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _IDDoc;
-		
-		private string _RFC;
-		
-		private string _DNombre;
-		
-		private string _DApPaterno;
-		
-		private string _DApMaterno;
-		
-		private EntitySet<Sesion> _Sesion;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDDocChanging(long value);
-    partial void OnIDDocChanged();
-    partial void OnRFCChanging(string value);
-    partial void OnRFCChanged();
-    partial void OnDNombreChanging(string value);
-    partial void OnDNombreChanged();
-    partial void OnDApPaternoChanging(string value);
-    partial void OnDApPaternoChanged();
-    partial void OnDApMaternoChanging(string value);
-    partial void OnDApMaternoChanged();
-    #endregion
-		
-		public Docente()
-		{
-			this._Sesion = new EntitySet<Sesion>(new Action<Sesion>(this.attach_Sesion), new Action<Sesion>(this.detach_Sesion));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDDoc", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long IDDoc
-		{
-			get
-			{
-				return this._IDDoc;
-			}
-			set
-			{
-				if ((this._IDDoc != value))
-				{
-					this.OnIDDocChanging(value);
-					this.SendPropertyChanging();
-					this._IDDoc = value;
-					this.SendPropertyChanged("IDDoc");
-					this.OnIDDocChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RFC", DbType="NVarChar(13) NOT NULL", CanBeNull=false)]
-		public string RFC
-		{
-			get
-			{
-				return this._RFC;
-			}
-			set
-			{
-				if ((this._RFC != value))
-				{
-					this.OnRFCChanging(value);
-					this.SendPropertyChanging();
-					this._RFC = value;
-					this.SendPropertyChanged("RFC");
-					this.OnRFCChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DNombre", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
-		public string DNombre
-		{
-			get
-			{
-				return this._DNombre;
-			}
-			set
-			{
-				if ((this._DNombre != value))
-				{
-					this.OnDNombreChanging(value);
-					this.SendPropertyChanging();
-					this._DNombre = value;
-					this.SendPropertyChanged("DNombre");
-					this.OnDNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DApPaterno", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
-		public string DApPaterno
-		{
-			get
-			{
-				return this._DApPaterno;
-			}
-			set
-			{
-				if ((this._DApPaterno != value))
-				{
-					this.OnDApPaternoChanging(value);
-					this.SendPropertyChanging();
-					this._DApPaterno = value;
-					this.SendPropertyChanged("DApPaterno");
-					this.OnDApPaternoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DApMaterno", DbType="NVarChar(60)")]
-		public string DApMaterno
-		{
-			get
-			{
-				return this._DApMaterno;
-			}
-			set
-			{
-				if ((this._DApMaterno != value))
-				{
-					this.OnDApMaternoChanging(value);
-					this.SendPropertyChanging();
-					this._DApMaterno = value;
-					this.SendPropertyChanged("DApMaterno");
-					this.OnDApMaternoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Docente_Sesion", Storage="_Sesion", ThisKey="IDDoc", OtherKey="IDDoc")]
-		public EntitySet<Sesion> Sesion
-		{
-			get
-			{
-				return this._Sesion;
-			}
-			set
-			{
-				this._Sesion.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Sesion(Sesion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Docente = this;
-		}
-		
-		private void detach_Sesion(Sesion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Docente = null;
 		}
 	}
 }

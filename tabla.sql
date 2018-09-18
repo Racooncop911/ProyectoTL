@@ -6,14 +6,14 @@ drop TABLE Tareas
 drop TABLE Sesiones
 
  CREATE TABLE Periodo(
-	IDPeriodo bigint NOT NULL PRIMARY KEY,
+	IDPeriodo bigint IDENTITY ( 1 , 1 ) NOT NULL PRIMARY KEY,
 	FechaInicio datetime NOT NULL,
 	FechaCierre datetime NOT NULL
 	
 )
 
  CREATE TABLE Alumno(
-	IDAlumno bigint PRIMARY KEY,
+	IDAlumno bigint IDENTITY ( 1 , 1 ) PRIMARY KEY,
 	NoControl int NOT NULL,
 	Nombre nvarchar(60) NOT NULL,
 	ApPaterno nvarchar(60) NOT NULL,
@@ -24,20 +24,20 @@ drop TABLE Sesiones
  
 )
   CREATE TABLE Docente(
-	IDDoc bigint PRIMARY KEY,
+	IDDoc bigint IDENTITY ( 1 , 1 ) PRIMARY KEY,
 	RFC nvarchar(13) NOT NULL,
 	DNombre nvarchar(60) NOT NULL,
 	DApPaterno nvarchar(60) NOT NULL,
 	DApMaterno nvarchar(60) NULL
 )
 CREATE TABLE Materia(
-	IDMat bigint PRIMARY KEY,
+	IDMat bigint IDENTITY ( 1 , 1 ) PRIMARY KEY,
 	Clave nvarchar(50) NOT NULL,
 	Creditos INT NOT NULL,
 	Nombre nvarchar(80) NOT NULL
 )
 CREATE TABLE Tarea(
-	IDTareas bigint PRIMARY KEY,
+	IDTareas bigint IDENTITY ( 1 , 1 ) PRIMARY KEY,
 	IDMat bigint REFERENCES Materia,
 	Titulo nvarchar(80),
 	Descripcion text,
@@ -45,9 +45,8 @@ CREATE TABLE Tarea(
 )
 
 CREATE TABLE Sesion(
-	IDSesion bigint PRIMARY KEY,
-	Dia  date NOT NULL,
-	Hora time NOT NULL,
+	IDSesion bigint IDENTITY ( 1 , 1 ) PRIMARY KEY,
+	Fecha datetime NOT NULL,
 	IDAlumno bigint REFERENCES Alumno,
 	IDDoc bigint REFERENCES Docente,
 	IDMat bigint REFERENCES Materia,
